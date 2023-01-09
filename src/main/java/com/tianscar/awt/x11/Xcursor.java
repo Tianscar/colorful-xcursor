@@ -5,7 +5,7 @@ import jnr.ffi.Runtime;
 import jnr.ffi.Struct;
 import jnr.ffi.annotations.In;
 
-public final class Xcursor {
+final class Xcursor {
 
     static {
         loadLibrary();

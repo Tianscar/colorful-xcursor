@@ -52,7 +52,7 @@ publishing {
             from components.java
             pom {
                 name = libName
-                description = 'Colorful custom cursor support for Java AWT/X11'
+                description = 'Colorful custom cursor support for Java XAWT (AWT/X11)'
                 url = 'https://github.com/Tianscar/colorful-xcursor'
                 licenses {
                     license {

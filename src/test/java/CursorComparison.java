@@ -15,7 +15,7 @@ public class CursorComparison {
 
     private static final String TITLE = "Cursor Comparison";
     private static final String BUTTON = "Click to change the cursor";
-    private static final String ORIGINAL = "Original";
+    private static final String ORIGINAL = "Original XAWT Custom Cursor";
     private static final String COLORFUL = "Colorful Xcursor";
 
     public static void main(String[] args) {
@@ -30,8 +30,8 @@ public class CursorComparison {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Cursor original = Toolkit.getDefaultToolkit().createCustomCursor(x11Logo, new Point(), "Original Custom Cursor");
-        Cursor colorful = new ColorfulXCursor(x11Logo, new Point(), "Colorful Xcursor");
+        Cursor original = Toolkit.getDefaultToolkit().createCustomCursor(x11Logo, new Point(), ORIGINAL);
+        Cursor colorful = new ColorfulXCursor(x11Logo, new Point(), COLORFUL);
         frame.setCursor(original);
         frame.setTitle(TITLE + " | Current: " + ORIGINAL);
         button.addActionListener(new ActionListener() {
