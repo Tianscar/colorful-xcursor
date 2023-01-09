@@ -16,8 +16,17 @@ dependencies {
 }
 ```
 
-## Usage
+## Notes
+**Remember this library only working with Java XAWT! On other AWT platforms it will cause JVM crash!**
+### Running on Java 9+
+Add the following lines to the JVM args:
 ```
+--add-exports java.desktop/sun.awt=ALL-UNNAMED
+--add-exports java.desktop/sun.awt.X11=ALL-UNNAMED
+```
+
+## Usage
+```java
 Cursor colorfulXcursor = new ColorfulXCursor(Image image, Point hotspot, String name);
 ```
 [A simple example](src/test/java/CursorComparison.java)
