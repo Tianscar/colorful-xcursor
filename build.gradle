@@ -40,6 +40,7 @@ test {
 
 java {
     withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
@@ -95,4 +96,10 @@ signing {
     def signingPassword = findProperty("signingPassword") ?:System.getenv("GPG_PASSWORD")
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications.mavenJava)
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }
