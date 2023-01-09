@@ -1,6 +1,21 @@
 # Colorful Xcursor
 Colorful custom cursor support for Java XAWT (AWT/X11)
 
+## Add the library to your project (gradle)
+1. Add the Maven Central repository (if not exist) to your build file:
+```groovy
+repositories {
+    mavenCentral()
+}
+```
+
+2. Add the dependency:
+```groovy
+dependencies {
+    implementation 'com.tianscar:colorful-xcursor:1.0.0'
+}
+```
+
 ## Usage
 ```
 Cursor colorfulXcursor = new ColorfulXCursor(Image image, Point hotspot, String name);
