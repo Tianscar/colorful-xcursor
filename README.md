@@ -15,7 +15,7 @@ Cursor colorfulXcursor = new ColorfulXCursor(Image image, Point hotspot, String 
 [MIT](https://github.com/Tianscar/colorful-xcursor/blob/main/LICENSE) (c) Tianscar  
 
 ### Dependencies
-[Apache-2.0](https://github.com/jnr/jnr-ffi/blob/master/LICENSE) [jnr-ffi](https://github.com/jnr/jnr-ffi)
+[jnr-ffi](https://github.com/jnr/jnr-ffi) - [Apache-2.0](https://github.com/jnr/jnr-ffi/blob/master/LICENSE)
 
 ### Resources be used for test
 [pencils.jpg](/src/test/resources/pencils.png) is cropped from https://en.wikipedia.org/wiki/Color#/media/File:Colouring_pencils.jpg,
