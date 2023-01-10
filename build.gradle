@@ -47,7 +47,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = libGroupName
-            artifactId = "${rootProject.name}-${project.name}"
+            artifactId = "${rootProject.name}"
             version = libVersionName
             from components.java
             pom {

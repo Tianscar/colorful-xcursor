@@ -1,3 +1,5 @@
+package com.tianscar.colorfulxcursor.test;
+
 import com.tianscar.awt.x11.ColorfulXCursor;
 
 import javax.imageio.ImageIO;
