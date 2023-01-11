@@ -10,6 +10,8 @@ import java.awt.Point;
 import java.awt.Image;
 import java.lang.reflect.Field;
 
+import static com.tianscar.awt.x11.Xcursor.*;
+
 public class ColorfulXCursor extends CustomCursor {
 
     private static final sun.misc.Unsafe UNSAFE;
@@ -36,13 +38,12 @@ public class ColorfulXCursor extends CustomCursor {
             final long pNativePixels = UNSAFE.allocateMemory(pixels.length * 4L);
             final Pointer nativePixels = Pointer.wrap(Runtime.getSystemRuntime(), pNativePixels);
             nativePixels.put(0, pixels, 0, pixels.length);
-            final Xcursor XCURSOR = Xcursor.getXcursor();
-            final Xcursor.XCursorImage xCursorImage = XCURSOR.XcursorImageCreate(width, height);
+            final XCursorImage xCursorImage = XcursorImageCreate(width, height);
             xCursorImage.setXhot(xHotSpot);
             xCursorImage.setYhot(yHotSpot);
             xCursorImage.setPixels(nativePixels);
-            final long pData = XCURSOR.XcursorImageLoadCursor(XToolkit.getDisplay(), xCursorImage);
-            XCURSOR.XcursorImageDestroy(xCursorImage);
+            final long pData = XcursorImageLoadCursor(XToolkit.getDisplay(), xCursorImage);
+            XcursorImageDestroy(xCursorImage);
             UNSAFE.freeMemory(pNativePixels);
             AWTAccessor.getCursorAccessor().setPData(this, pData);
         }

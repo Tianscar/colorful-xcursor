@@ -12,7 +12,7 @@ repositories {
 2. Add the dependency:
 ```groovy
 dependencies {
-    implementation 'com.tianscar:colorful-xcursor:1.0.0'
+    implementation 'com.tianscar:colorful-xcursor:1.0.1'
 }
 ```
 

@@ -7,48 +7,28 @@ import jnr.ffi.annotations.In;
 
 final class Xcursor {
 
-    static {
-        loadLibrary();
+    private Xcursor() {
+        throw new UnsupportedOperationException();
     }
 
-    private Xcursor(){}
+    private static final Library LIBRARY = LibraryLoader.create(Library.class).load("Xcursor");
 
-    private static Library library;
-
-    private static Library getLibrary() {
-        loadLibrary();
-        return library;
-    }
-
-    private static void loadLibrary() {
-        if (library == null) {
-            library = LibraryLoader.create(Library.class).load("Xcursor");
-        }
-    }
-
-    public interface Library {
+    protected interface Library {
         XCursorImage XcursorImageCreate(@In int width, @In int height);
         void XcursorImageDestroy(@In XCursorImage image);
         long XcursorImageLoadCursor(@In long dpy, @In XCursorImage image);
     }
 
-    private static Xcursor INSTANCE = null;
-
-    public static Xcursor getXcursor() {
-        if (INSTANCE == null) INSTANCE = new Xcursor();
-        return INSTANCE;
+    public static XCursorImage XcursorImageCreate(final int width, final int height) {
+        return LIBRARY.XcursorImageCreate(width, height);
     }
 
-    public XCursorImage XcursorImageCreate(final int width, final int height) {
-        return getLibrary().XcursorImageCreate(width, height);
+    public static void XcursorImageDestroy(final XCursorImage image) {
+        LIBRARY.XcursorImageDestroy(image);
     }
 
-    public void XcursorImageDestroy(final XCursorImage image) {
-        getLibrary().XcursorImageDestroy(image);
-    }
-
-    public long XcursorImageLoadCursor(final long dpy, final XCursorImage image) {
-        return getLibrary().XcursorImageLoadCursor(dpy, image);
+    public static long XcursorImageLoadCursor(final long dpy, final XCursorImage image) {
+        return LIBRARY.XcursorImageLoadCursor(dpy, image);
     }
 
     public final static class XCursorImage extends Struct {

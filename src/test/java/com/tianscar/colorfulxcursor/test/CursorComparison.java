@@ -26,14 +26,15 @@ public class CursorComparison {
         frame.setSize(640, 480);
         Button button = new Button(BUTTON);
         button.setFont(new JLabel().getFont().deriveFont(32f));
-        BufferedImage x11Logo;
+        BufferedImage pencils;
         try {
-            x11Logo = ImageIO.read(Objects.requireNonNull(CursorComparison.class.getResourceAsStream("pencils.png")));
-        } catch (IOException e) {
+            pencils = ImageIO.read(Objects.requireNonNull(CursorComparison.class.getResourceAsStream("/pencils.png")));
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Cursor original = Toolkit.getDefaultToolkit().createCustomCursor(x11Logo, new Point(), ORIGINAL);
-        Cursor colorful = new ColorfulXCursor(x11Logo, new Point(), COLORFUL);
+        Cursor original = Toolkit.getDefaultToolkit().createCustomCursor(pencils, new Point(), ORIGINAL);
+        Cursor colorful = new ColorfulXCursor(pencils, new Point(), COLORFUL);
         frame.setCursor(original);
         frame.setTitle(TITLE + " | Current: " + ORIGINAL);
         button.addActionListener(new ActionListener() {
