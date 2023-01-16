@@ -1,4 +1,4 @@
-package com.tianscar.colorfulxcursor.test;
+package com.tianscar.awt.x11.colorfulxcursor.test;
 
 import com.tianscar.awt.x11.ColorfulXCursor;
 

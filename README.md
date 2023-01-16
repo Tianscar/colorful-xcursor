@@ -12,7 +12,7 @@ repositories {
 2. Add the dependency:
 ```groovy
 dependencies {
-    implementation 'com.tianscar:colorful-xcursor:1.0.1'
+    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.0.1'
 }
 ```
 
@@ -29,7 +29,7 @@ Add the following lines to the JVM args:
 ```java
 Cursor colorfulXcursor = new ColorfulXCursor(Image image, Point hotspot, String name);
 ```
-[A simple example](/src/test/java/com/tianscar/colorfulxcursor/test/CursorComparison.java)
+[A simple example](src/test/java/com/tianscar/awt/x11/colorfulxcursor/test/CursorComparison.java)
 
 ## Comparison
 ![Original XAWT Custom Cursor](img0.png)

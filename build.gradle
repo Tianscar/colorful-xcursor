@@ -6,7 +6,7 @@ plugins {
 
 ext {
     libName = 'Colorful Xcursor'
-    libGroupName = 'com.tianscar'
+    libGroupName = 'com.tianscar.awt.x11'
     libVendorName = 'Tianscar'
 
     libVersionCode = 2
