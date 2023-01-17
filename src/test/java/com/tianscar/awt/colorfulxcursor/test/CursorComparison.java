@@ -1,4 +1,4 @@
-package com.tianscar.awt.x11.colorfulxcursor.test;
+package com.tianscar.awt.colorfulxcursor.test;
 
 import com.tianscar.awt.x11.ColorfulXCursor;
 
@@ -15,12 +15,12 @@ import java.util.Objects;
 
 public class CursorComparison {
 
-    private static final String TITLE = "Cursor Comparison";
-    private static final String BUTTON = "Click to change the cursor";
-    private static final String ORIGINAL = "Original XAWT Custom Cursor";
-    private static final String COLORFUL = "Colorful Xcursor";
+    protected static final String TITLE = "Cursor Comparison";
+    protected static final String BUTTON = "Click to change the cursor";
+    protected static final String ORIGINAL = "Original XAWT Custom Cursor";
+    protected static final String COLORFUL = "Colorful Xcursor";
 
-    public static void main(String[] args) {
+    protected static void init() {
         Frame frame = new Frame();
         frame.setBackground(Color.WHITE);
         frame.setSize(640, 480);
@@ -34,7 +34,7 @@ public class CursorComparison {
             throw new RuntimeException(e);
         }
         Cursor original = Toolkit.getDefaultToolkit().createCustomCursor(pencils, new Point(), ORIGINAL);
-        Cursor colorful = new ColorfulXCursor(pencils, new Point(), COLORFUL);
+        Cursor colorful = ColorfulXCursor.createImageCursor(pencils, new Point(), COLORFUL);
         frame.setCursor(original);
         frame.setTitle(TITLE + " | Current: " + ORIGINAL);
         button.addActionListener(new ActionListener() {
@@ -60,6 +60,15 @@ public class CursorComparison {
             }
         });
         frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                init();
+            }
+        });
     }
 
 }

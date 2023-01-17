@@ -9,8 +9,8 @@ ext {
     libGroupName = 'com.tianscar.awt.x11'
     libVendorName = 'Tianscar'
 
-    libVersionCode = 2
-    libVersionName = '1.0.1'
+    libVersionCode = 3
+    libVersionName = '1.1.0'
 
     libSourceCompatibility = JavaVersion.VERSION_1_8
     libTargetCompatibility = JavaVersion.VERSION_1_8

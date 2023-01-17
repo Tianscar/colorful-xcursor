@@ -5,6 +5,7 @@ Colorful custom cursor support for Java XAWT (AWT/X11)
 1. Add the Maven Central repository (if not exist) to your build file:
 ```groovy
 repositories {
+    ...
     mavenCentral()
 }
 ```
@@ -12,7 +13,8 @@ repositories {
 2. Add the dependency:
 ```groovy
 dependencies {
-    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.0.1'
+    ...
+    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.1.0'
 }
 ```
 
@@ -27,9 +29,12 @@ Add the following lines to the JVM args:
 
 ## Usage
 ```java
-Cursor colorfulXcursor = new ColorfulXCursor(Image image, Point hotspot, String name);
+Cursor imageCursor   = ColorfulXCursor.createImageCursor(Image cursor, Point hotSpot, String name);
+Cursor fontCursor    = ColorfulXCursor.getFontCursor(int type);
+Cursor libraryCursor = ColorfulXCursor.getLibraryCursor(String name);
 ```
-[A simple example](src/test/java/com/tianscar/awt/x11/colorfulxcursor/test/CursorComparison.java)
+[JavaDoc](https://docs.tianscar.com/colorful-xcursor)  
+[A simple example](src/test/java/com/tianscar/awt/colorfulxcursor/test/CursorComparison.java)
 
 ## Comparison
 ![Original XAWT Custom Cursor](img0.png)
