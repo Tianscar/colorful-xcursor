@@ -20,7 +20,7 @@ public class XImageCursorTest {
         frame.setSize(640, 480);
         BufferedImage pencils;
         try {
-            pencils = ImageIO.read(Objects.requireNonNull(XCursorComparison.class.getResourceAsStream("/pencils.png")));
+            pencils = ImageIO.read(Objects.requireNonNull(XImageCursorTest.class.getResourceAsStream("/pencils.png")));
         }
         catch (IOException e) {
             throw new RuntimeException(e);
