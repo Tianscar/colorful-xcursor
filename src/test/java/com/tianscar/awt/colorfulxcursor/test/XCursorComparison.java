@@ -13,9 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class CursorComparison {
+public class XCursorComparison {
 
-    protected static final String TITLE = "Cursor Comparison";
+    protected static final String TITLE = "X Cursor Comparison";
     protected static final String BUTTON = "Click to change the cursor";
     protected static final String ORIGINAL = "Original XAWT Custom Cursor";
     protected static final String COLORFUL = "Colorful Xcursor";
@@ -28,7 +28,7 @@ public class CursorComparison {
         button.setFont(new JLabel().getFont().deriveFont(32f));
         BufferedImage pencils;
         try {
-            pencils = ImageIO.read(Objects.requireNonNull(CursorComparison.class.getResourceAsStream("/pencils.png")));
+            pencils = ImageIO.read(Objects.requireNonNull(XCursorComparison.class.getResourceAsStream("/pencils.png")));
         }
         catch (IOException e) {
             throw new RuntimeException(e);

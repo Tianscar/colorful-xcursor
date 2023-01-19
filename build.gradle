@@ -9,8 +9,8 @@ ext {
     libGroupName = 'com.tianscar.awt.x11'
     libVendorName = 'Tianscar'
 
-    libVersionCode = 3
-    libVersionName = '1.1.0'
+    libVersionCode = 4
+    libVersionName = '1.1.1'
 
     libSourceCompatibility = JavaVersion.VERSION_1_8
     libTargetCompatibility = JavaVersion.VERSION_1_8
@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.jnr:jnr-ffi:2.2.12'
+    implementation 'com.github.jnr:jnr-ffi:2.2.13'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -47,7 +47,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = libGroupName
-            artifactId = "${rootProject.name}"
+            artifactId = rootProject.name
             version = libVersionName
             from components.java
             pom {

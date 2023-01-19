@@ -14,13 +14,13 @@ repositories {
 ```groovy
 dependencies {
     ...
-    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.1.0'
+    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.1.1'
 }
 ```
 
 ## Notes
 **Remember this library only working with Java XAWT! On other AWT platforms it will cause JVM crash!**
-### Running on Java 9+
+### Running on Java 16+
 Add the following lines to the JVM args:
 ```
 --add-exports java.desktop/sun.awt=ALL-UNNAMED
@@ -34,7 +34,7 @@ Cursor fontCursor    = ColorfulXCursor.getFontCursor(int type);
 Cursor libraryCursor = ColorfulXCursor.getLibraryCursor(String name);
 ```
 [JavaDoc](https://docs.tianscar.com/colorful-xcursor)  
-[A simple example](src/test/java/com/tianscar/awt/colorfulxcursor/test/CursorComparison.java)
+[A simple example](src/test/java/com/tianscar/awt/colorfulxcursor/test/XCursorComparison.java)
 
 ## Comparison
 ![Original XAWT Custom Cursor](img0.png)
@@ -47,5 +47,5 @@ Cursor libraryCursor = ColorfulXCursor.getLibraryCursor(String name);
 [jnr-ffi](https://github.com/jnr/jnr-ffi) - [Apache-2.0](https://github.com/jnr/jnr-ffi/blob/master/LICENSE)
 
 ### Resources be used for test
-[pencils.jpg](/src/test/resources/pencils.png) is cropped from https://en.wikipedia.org/wiki/Color#/media/File:Colouring_pencils.jpg,
+[pencils.jpg](src/test/resources/pencils.png) is cropped from https://en.wikipedia.org/wiki/Color#/media/File:Colouring_pencils.jpg,
 the source image licensed under CC-BY-SA.
