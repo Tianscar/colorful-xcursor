@@ -39,7 +39,7 @@ Cursor libraryCursor = ColorfulXCursor.getLibraryCursor(String name);
 ![Colorful Xcursor](img1.png)
 
 ## License
-[MIT](/LICENSE) (c) Tianscar  
+[MIT](/LICENSE) (c) Karstian Lee  
 
 ### Dependencies
 [Apache-2.0](https://github.com/jnr/jnr-ffi/blob/master/LICENSE) [jnr-ffi](https://github.com/jnr/jnr-ffi)
