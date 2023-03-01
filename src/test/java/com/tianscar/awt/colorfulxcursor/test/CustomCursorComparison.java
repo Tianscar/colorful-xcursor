@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class CursorComparison {
+public class CustomCursorComparison {
 
     protected static final String TITLE = "Cursor Comparison";
     protected static final String BUTTON = "Click to change the cursor";
@@ -28,7 +28,7 @@ public class CursorComparison {
         button.setFont(new JLabel().getFont().deriveFont(32f));
         BufferedImage pencils;
         try {
-            pencils = ImageIO.read(Objects.requireNonNull(CursorComparison.class.getResourceAsStream("/pencils.png")));
+            pencils = ImageIO.read(Objects.requireNonNull(CustomCursorComparison.class.getResourceAsStream("/pencils.png")));
         }
         catch (IOException e) {
             throw new RuntimeException(e);

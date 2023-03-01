@@ -9,8 +9,8 @@ ext {
     libGroupName = 'com.tianscar.awt.x11'
     libVendorName = 'Tianscar'
 
-    libVersionCode = 4
-    libVersionName = '1.1.1'
+    libVersionCode = 5
+    libVersionName = '1.1.2'
 
     libSourceCompatibility = JavaVersion.VERSION_1_8
     libTargetCompatibility = JavaVersion.VERSION_1_8
@@ -63,7 +63,7 @@ publishing {
                 developers {
                     developer {
                         id = 'Tianscar'
-                        name = 'Tiansword Carbonicacid'
+                        name = 'Karstian Lee'
                         email = 'tianscar@protonmail.com'
                     }
                 }
@@ -92,9 +92,6 @@ publishing {
 }
 
 signing {
-    def signingKey = findProperty("signingKey") ?: System.getenv("GPG_KEY")
-    def signingPassword = findProperty("signingPassword") ?:System.getenv("GPG_PASSWORD")
-    useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications.mavenJava)
 }
 

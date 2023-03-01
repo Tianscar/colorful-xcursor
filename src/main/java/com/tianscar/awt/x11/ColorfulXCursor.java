@@ -4,10 +4,10 @@ import jnr.ffi.LibraryLoader;
 import jnr.ffi.Pointer;
 import jnr.ffi.Runtime;
 import jnr.ffi.Struct;
+import jnr.ffi.Memory;
 import jnr.ffi.annotations.In;
 import sun.awt.AWTAccessor;
 import sun.awt.CustomCursor;
-import sun.awt.X11.XToolkit;
 
 import java.awt.Point;
 import java.awt.Image;
@@ -15,7 +15,7 @@ import java.awt.Toolkit;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,51 +29,78 @@ public final class ColorfulXCursor {
     // Cursor classes
 
     static final class XCursor extends Cursor {
+        private static final long serialVersionUID = -1471190912219055639L;
+
         XCursor(final String name, final long pData) {
             super(name);
-            XToolkit.awtLock();
+            xToolkitAwtLock();
             try {
                 AWTAccessor.getCursorAccessor().setPData(this, pData);
             }
             finally {
-                XToolkit.awtUnlock();
+                xToolkitAwtUnlock();
             }
         }
     }
+
     static final class XImageCursor extends CustomCursor {
+        private static final long serialVersionUID = 3389319727093618583L;
+
         public XImageCursor(final Image cursor, final Point hotSpot, final String name) throws IndexOutOfBoundsException {
             super(cursor, hotSpot, name);
         }
         @Override
         protected void createNativeCursor(final Image im, final int[] pixels, final int width, final int height, final int xHotSpot, final int yHotSpot) {
-            XToolkit.awtLock();
+            xToolkitAwtLock();
             try {
-                final long pNativePixels = UNSAFE.allocateMemory(pixels.length * 4L);
-                final Pointer nativePixels = Pointer.wrap(Runtime.getSystemRuntime(), pNativePixels);
+                final Pointer nativePixels = Memory.allocateDirect(Runtime.getSystemRuntime(), pixels.length * 4L);
                 nativePixels.put(0, pixels, 0, pixels.length);
                 final XcursorImage xCursorImage = XCURSOR.XcursorImageCreate(width, height);
                 xCursorImage.xhot.set(xHotSpot);
                 xCursorImage.yhot.set(yHotSpot);
                 xCursorImage.pixels.set(nativePixels);
-                final long pData = XCURSOR.XcursorImageLoadCursor(XToolkit.getDisplay(), xCursorImage);
+                final long pData = XCURSOR.XcursorImageLoadCursor(xToolkitGetDisplay(), xCursorImage);
                 XCURSOR.XcursorImageDestroy(xCursorImage);
-                UNSAFE.freeMemory(pNativePixels);
                 AWTAccessor.getCursorAccessor().setPData(this, pData);
             }
             finally {
-                XToolkit.awtUnlock();
+                xToolkitAwtUnlock();
             }
         }
 
     }
 
+    private static long xToolkitGetDisplay() {
+        try {
+            return (long) Class.forName("sun.awt.X11.XToolkit").getMethod("getDisplay").invoke(null);
+        }
+        catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            return NULL;
+        }
+    }
+    private static void xToolkitAwtLock() {
+        try {
+            Class.forName("sun.awt.X11.XToolkit").getMethod("awtLock").invoke(null);
+        }
+        catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void xToolkitAwtUnlock() {
+        try {
+            Class.forName("sun.awt.X11.XToolkit").getMethod("awtUnlock").invoke(null);
+        }
+        catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private static void checkHeadless() throws HeadlessException {
         if (GraphicsEnvironment.isHeadless()) throw new HeadlessException();
     }
 
     /**
      * <p>Creates a new image cursor object.
-     * <p>If {@link #isARGBSupported()} returns false, it fallbacks to {@link Toolkit#createCustomCursor(Image, Point, String)}
+     * <p>If {@link #isARGBSupported()} returns false, it falls back to {@link Toolkit#createCustomCursor(Image, Point, String)}
      * <p>If the image to display is invalid, the cursor will be hidden (made
      * completely transparent), and the hotspot will be set to (0, 0).
      *
@@ -96,7 +123,7 @@ public final class ColorfulXCursor {
      */
     public static Cursor createImageCursor(final Image cursor, final Point hotSpot, final String name) throws IndexOutOfBoundsException, HeadlessException {
         checkHeadless();
-        if (isARGBSupported()) return new XImageCursor(cursor, hotSpot, name);
+        if (XCURSOR != null && isARGBSupported()) return new XImageCursor(cursor, hotSpot, name);
         else return Toolkit.getDefaultToolkit().createCustomCursor(cursor, hotSpot, name);
     }
 
@@ -118,8 +145,9 @@ public final class ColorfulXCursor {
      */
     public static Cursor getFontCursor(final int type) throws IllegalArgumentException, HeadlessException {
         checkHeadless();
+        if (XLIB == null) return null;
         final String name = getFontCursorName(type);
-        final long pData = XLIB.XCreateFontCursor(XToolkit.getDisplay(), type);
+        final long pData = XLIB.XCreateFontCursor(xToolkitGetDisplay(), type);
         if (pData == NULL) return Cursor.getDefaultCursor();
         if (!systemCursors.containsKey(name)) systemCursors.put(name, new XCursor(name, pData));
         return systemCursors.get(name);
@@ -222,7 +250,8 @@ public final class ColorfulXCursor {
      */
     public static Cursor getLibraryCursor(final String name) throws HeadlessException {
         checkHeadless();
-        final long pData = XCURSOR.XcursorLibraryLoadCursor(XToolkit.getDisplay(), name);
+        if (XCURSOR == null) return null;
+        final long pData = XCURSOR.XcursorLibraryLoadCursor(xToolkitGetDisplay(), name);
         if (pData == NULL) return Cursor.getDefaultCursor();
         else {
             if (!systemCursors.containsKey(name)) systemCursors.put(name, new XCursor(name, pData));
@@ -235,31 +264,36 @@ public final class ColorfulXCursor {
      * @return true if ARGB-colored cursor is supported by current display, false not
      */
     public static boolean isARGBSupported() {
-        return XCURSOR.XcursorSupportsARGB(XToolkit.getDisplay());
+        if (XCURSOR == null) return Toolkit.getDefaultToolkit().getMaximumCursorColors() > 2;
+        return XCURSOR.XcursorSupportsARGB(xToolkitGetDisplay());
     }
 
     private ColorfulXCursor() {
         throw new UnsupportedOperationException();
     }
 
-    // UNSAFE
-    static final sun.misc.Unsafe UNSAFE;
-    static {
-        sun.misc.Unsafe unsafe = null;
-        try {
-            @SuppressWarnings("DiscouragedPrivateApi")
-            final Field field = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
-            field.setAccessible(true);
-            unsafe = (sun.misc.Unsafe) field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException ignored) {
-        }
-        UNSAFE = unsafe;
-    }
-
     // JNR-FFI
 
-    private static final Xlib XLIB = LibraryLoader.create(Xlib.class).load("X11");
-    private static final Xcursor XCURSOR = LibraryLoader.create(Xcursor.class).load("Xcursor");
+    private static final Xlib XLIB = initXLib();
+    private static final Xcursor XCURSOR = initXCursor();
+
+    private static Xlib initXLib() {
+        try {
+            return LibraryLoader.create(Xlib.class).load("X11");
+        }
+        catch (Throwable t) {
+            return null;
+        }
+    }
+
+    private static Xcursor initXCursor() {
+        try {
+            return LibraryLoader.create(Xcursor.class).load("Xcursor");
+        }
+        catch (Throwable t) {
+            return null;
+        }
+    }
 
     // Xlib
 

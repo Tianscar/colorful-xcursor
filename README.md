@@ -18,8 +18,6 @@ dependencies {
 }
 ```
 
-## Notes
-**Remember this library only working with Java XAWT! On other AWT platforms it will cause JVM crash!**
 ### Running on Java 16+
 Add the following lines to the JVM args:
 ```
