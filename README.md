@@ -14,7 +14,7 @@ repositories {
 ```groovy
 dependencies {
     ...
-    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.1.1'
+    implementation 'com.tianscar.awt.x11:colorful-xcursor:1.1.2'
 }
 ```
 
