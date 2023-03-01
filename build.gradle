@@ -5,23 +5,23 @@ plugins {
 }
 
 ext {
-    libName = 'Colorful Xcursor'
-    libGroupName = 'com.tianscar.awt.x11'
-    libVendorName = 'Tianscar'
+    libraryName = 'Colorful Xcursor'
+    libraryGroupName = 'com.tianscar.awt.x11'
+    libraryVendorName = 'Tianscar'
 
-    libVersionCode = 5
-    libVersionName = '1.1.2'
+    libraryVersionCode = 5
+    libraryVersionName = '1.1.2'
 
-    libSourceCompatibility = JavaVersion.VERSION_1_8
-    libTargetCompatibility = JavaVersion.VERSION_1_8
+    librarySourceCompatibility = JavaVersion.VERSION_1_8
+    libraryTargetCompatibility = JavaVersion.VERSION_1_8
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-sourceCompatibility = libSourceCompatibility
-targetCompatibility = libTargetCompatibility
+sourceCompatibility = librarySourceCompatibility
+targetCompatibility = libraryTargetCompatibility
 
-group = libGroupName
-version = libVersionName
+group = libraryGroupName
+version = libraryVersionName
 
 repositories {
     mavenCentral()
@@ -46,12 +46,12 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = libGroupName
+            groupId = libraryGroupName
             artifactId = rootProject.name
-            version = libVersionName
+            version = libraryVersionName
             from components.java
             pom {
-                name = libName
+                name = libraryName
                 description = 'Colorful custom cursor support for Java XAWT (AWT/X11)'
                 url = 'https://github.com/Tianscar/colorful-xcursor'
                 licenses {
